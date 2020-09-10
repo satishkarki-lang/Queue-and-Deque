@@ -1,0 +1,135 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Queue {
+  
+   String websites[];
+   int size;
+   int rear;
+   int front;
+
+   public Queue(){
+       websites=new String[5];
+       size=0;
+       front=-1;
+       rear=-1;
+   }
+  
+   public int size() {
+       return size;
+   }
+
+   public boolean isEmpty() {
+       if(size==0) {
+           return true;
+       }
+       return false;
+   }
+  
+
+   public String front() throws Queueemptyexception {
+       if(front==-1) {
+           Queueemptyexception e= new Queueemptyexception();
+           throw e;
+       }
+       return websites[front];
+   }
+  
+  
+   public String rear() throws QueuefullException {
+       if(size==0) {
+           QueuefullException e= new QueuefullException();
+           throw e;
+       }
+       return websites[rear];
+   }
+  
+   public void remove_oldest_entry_and_add_newest_entry(String element) throws Queueemptyexception, QueuefullException {
+
+       dequeue();
+       enqueue(element);
+      
+   }
+ 
+   public void enqueue(String new_website) throws QueuefullException {
+       if(size==websites.length) {
+           QueuefullException e= new QueuefullException();
+           throw e;
+       }
+       if(size==0) {
+           front=0;
+       }
+
+       rear++;
+       size++;
+      
+       if(rear==websites.length) {
+           rear=0;
+       }
+       websites[rear]=new_website;
+   }
+
+   public String dequeue() throws Queueemptyexception {
+       if(front==-1) {
+           Queueemptyexception e= new Queueemptyexception();
+           throw e;
+       }
+      
+       String temp=websites[front];
+       front++;
+       size--;
+      
+       if(size==0) {
+           front=-1;
+           rear=-1;
+       }
+       return temp;
+   }
+  
+   public ArrayList<String> reverse_chronological_order() {
+      
+       ArrayList<String> list= new ArrayList<String>();
+      
+       while(isEmpty()) {
+           try {
+               list.add(dequeue());
+           } catch (Queueemptyexception e) {
+              
+               e.printStackTrace();
+           }
+       }
+
+       Collections.reverse(list);
+       return list;
+   }
+  
+  
+   private void doublecapacity() {
+       String temp[]=new String[websites.length];
+      
+       temp=websites;
+      
+       websites=new String[2*websites.length];
+      
+       for(int i=front;i<temp.length;i++) {
+           websites[i]=temp[i];
+       }
+       for(int i=0;i<front-1;i++) {
+           websites[i]=temp[i];
+       }
+       front=0;
+       rear=websites.length;
+   }
+  
+  
+}
+
+public class Queue_implementation {
+
+   public static void main(String[] args) {
+
+       Queue que=new Queue();
+      
+      
+   }
+}
